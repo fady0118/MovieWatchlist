@@ -3,8 +3,6 @@ import { prisma, connectDB, disconnectDB } from "./prismaClient.js";
 const PORT = process.env.PORT || 8000;
 const app = express();
 
-connectDB();
-
 // body parsing middleware
 app.use(express.json()); // parse json req body
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +11,8 @@ import authMiddleware from './middleware/authmiddleware.js'
 // import routes
 import movieRouter from "./Routes/crudRoutes/movieRoutes.js";
 import userRouter from "./Routes/crudRoutes/userRoutes.js";
+import watchListRouter from "./Routes/crudRoutes/watchListRoutes.js";
+
 import authRouter from "./Routes/authRoutes/authRoutes.js";
 // API routes
 //Auth
@@ -20,20 +20,18 @@ app.use("/auth", authRouter);
 //CRUD
 app.use("/movies", authMiddleware,movieRouter);
 app.use("/users", authMiddleware, userRouter);
+app.use("/watchLists", authMiddleware, watchListRouter);
 
-app.use('/testPrisma', async(req, res)=>{
-const result = await prisma.$queryRaw`SELECT 1`;
-console.log(result);
-})
-
-app.use("/", (req, res) => {
-  res.json({ message: "test test test" });
-});
+// app.use('/testPrisma', async(req, res)=>{
+// const result = await prisma.$queryRaw`SELECT 1`;
+// console.log(result);
+// })
 
 // start server
 app.listen(PORT, () => {
   console.log(`server started on PORT ${PORT}`);
 });
+
 
 // calling disconnect after every request doesn't make sense and will slow things down
 // we will call it only in some cases

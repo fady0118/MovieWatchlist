@@ -2,18 +2,14 @@
 ### GET all movies
 GET http://localhost:3874/
 
-
-### Test prisma
-GET http://localhost:3874/testPrisma
-
 ### Register a User
 POST  http://localhost:3874/auth/register
 Content-Type: application/json
 
 {
-    "email":"gilgamesh@gmail.com",
-    "username":"KingOfUruk",
-    "password":"GilxEnkidu"
+    "email":"testUser@gmail.com",
+    "username":"testUser_0",
+    "password":"testurpingThePEACE"
 }
 
 ### Login a User
@@ -21,8 +17,20 @@ POST  http://localhost:3874/auth/login
 Content-Type: application/json
 
 {
-    "email":"gilgamesh@gmail.com",
-    "password":"GilxEnkidu"
+    "email":"deleted@system.local",
+    "password":"cogito281y0jnfl-ndn"
 }
 ### Logout a User
 POST  http://localhost:3874/auth/logout
+
+### CRUD
+### WatchList
+### Add movie to watchlist
+POST  http://localhost:3874/watchLists/
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+
+{
+    "movieId":"83365563-264f-4492-98cc-8ea4895e6f75",
+    "notes":"a tim burton - johnny deep classic"
+}
