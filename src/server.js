@@ -1,6 +1,5 @@
 import express from "express";
 import { prisma, connectDB, disconnectDB } from "./prismaClient.js";
-
 const PORT = process.env.PORT || 8000;
 const app = express();
 
@@ -9,15 +8,23 @@ connectDB();
 // body parsing middleware
 app.use(express.json()); // parse json req body
 app.use(express.urlencoded({ extended: true }));
-
+// import middleware
+import authMiddleware from './middleware/authmiddleware.js'
 // import routes
 import movieRouter from "./Routes/crudRoutes/movieRoutes.js";
 import userRouter from "./Routes/crudRoutes/userRoutes.js";
 import authRouter from "./Routes/authRoutes/authRoutes.js";
 // API routes
-app.use("/movies", movieRouter);
-app.use("/users", userRouter);
+//Auth
 app.use("/auth", authRouter);
+//CRUD
+app.use("/movies", authMiddleware,movieRouter);
+app.use("/users", authMiddleware, userRouter);
+
+app.use('/testPrisma', async(req, res)=>{
+const result = await prisma.$queryRaw`SELECT 1`;
+console.log(result);
+})
 
 app.use("/", (req, res) => {
   res.json({ message: "test test test" });

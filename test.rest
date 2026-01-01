@@ -1,3 +1,28 @@
 ### Movie Routes
 ### GET all movies
 GET http://localhost:3874/
+
+
+### Test prisma
+GET http://localhost:3874/testPrisma
+
+### Register a User
+POST  http://localhost:3874/auth/register
+Content-Type: application/json
+
+{
+    "email":"gilgamesh@gmail.com",
+    "username":"KingOfUruk",
+    "password":"GilxEnkidu"
+}
+
+### Login a User
+POST  http://localhost:3874/auth/login
+Content-Type: application/json
+
+{
+    "email":"gilgamesh@gmail.com",
+    "password":"GilxEnkidu"
+}
+### Logout a User
+POST  http://localhost:3874/auth/logout
