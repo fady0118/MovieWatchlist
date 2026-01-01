@@ -25,12 +25,31 @@ POST  http://localhost:3874/auth/logout
 
 ### CRUD
 ### WatchList
+### get user watchlist
+GET  http://localhost:3874/watchLists/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+
 ### Add movie to watchlist
 POST  http://localhost:3874/watchLists/
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+Authorization: Bearer eyJ5d8f2tgysbnsa9hnR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
 
 {
-    "movieId":"83365563-264f-4492-98cc-8ea4895e6f75",
-    "notes":"a tim burton - johnny deep classic"
+    "movieId":"16afaa70-82e0-4c07-ac3c-ad646854378e",
+    "rating": 8
 }
+
+### update watchlist Item
+PATCH http://localhost:3874/watchLists/d2f7b94c-1573-4d1e-a2ba-1bca97566c6b
+Content-Type:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+
+{
+    "rating":90,
+    "status":"blablabla",
+    "notes":23.2
+}
+### delete watchlist Item
+DELETE http://localhost:3874/watchLists/f56ea8d4-92a5-45c8-a2b9-0de5fa96e95d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM

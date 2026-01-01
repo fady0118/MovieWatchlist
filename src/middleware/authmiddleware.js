@@ -1,15 +1,36 @@
 import jwt from "jsonwebtoken";
+import { prisma } from "../prismaClient.js";
 
-export default function authenticate(req, res, next) {
+export default async function authenticate(req, res, next) {
   try {
-    const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).json({ message: "no token provided" });
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies?.JWT) {
+      token = req.cookies.JWT;
     }
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized, no token provided!" });
+    }
+    // decode the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // check that user exists in the db
+    const user = await prisma.user.findUnique({
+      where: {
+        id: decoded.user_Id,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    // add userId to the req
     req.userId = decoded.user_Id;
+    // alternatively since we fetched the enitre user from the db
+    // we could add it to the req -> req.user = user
+
+    // proceed to the crud controller
     next();
   } catch (error) {
-    res.status(401).json({ message: "Invalid token", error: error.message });
+    res.status(401).json({ error: error.message });
   }
 }

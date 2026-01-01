@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json()); // parse json req body
 app.use(express.urlencoded({ extended: true }));
 // import middleware
-import authMiddleware from './middleware/authmiddleware.js'
+import authMiddleware from "./middleware/authmiddleware.js";
 // import routes
 import movieRouter from "./Routes/crudRoutes/movieRoutes.js";
 import userRouter from "./Routes/crudRoutes/userRoutes.js";
@@ -18,7 +18,7 @@ import authRouter from "./Routes/authRoutes/authRoutes.js";
 //Auth
 app.use("/auth", authRouter);
 //CRUD
-app.use("/movies", authMiddleware,movieRouter);
+app.use("/movies", authMiddleware, movieRouter);
 app.use("/users", authMiddleware, userRouter);
 app.use("/watchLists", authMiddleware, watchListRouter);
 
@@ -28,10 +28,9 @@ app.use("/watchLists", authMiddleware, watchListRouter);
 // })
 
 // start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`server started on PORT ${PORT}`);
 });
-
 
 // calling disconnect after every request doesn't make sense and will slow things down
 // we will call it only in some cases

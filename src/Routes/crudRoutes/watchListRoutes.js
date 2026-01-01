@@ -1,15 +1,18 @@
 import { Router } from "express";
-import { addToWatchListController, getAllWatchListController } from "../../controllers/watchListController.js";
+import { addToWatchListController, deleteWatchListItemController, getWatchListController, updateWatchListItemController } from "../../controllers/watchListController.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { addToWatchListSchema, updateWatchlistSchema } from "../../validators/watchlistValidators.js";
 
 const router = Router();
 
 // get the entire watchlist of a signed user
-router.get("/", getAllWatchListController);
+router.get("/", getWatchListController);
 // create new watchlist item
-router.post("/", addToWatchListController);
-// // update watchlist item
-// router.patch("/:id",);
+router.post("/", validateRequest(addToWatchListSchema), addToWatchListController);
+
+// update watchlist item
+router.patch("/:id", validateRequest(updateWatchlistSchema), updateWatchListItemController);
 // // delete watchlist item
-// router.delete("/:id", (req, res) => {});
+router.delete("/:id", deleteWatchListItemController);
 
 export default router;
