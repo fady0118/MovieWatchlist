@@ -23,10 +23,8 @@ export default async function authenticate(req, res, next) {
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }
-    // add userId to the req
-    req.userId = decoded.user_Id;
-    // alternatively since we fetched the enitre user from the db
-    // we could add it to the req -> req.user = user
+    // add user to the req
+    req.user = user;
 
     // proceed to the crud controller
     next();

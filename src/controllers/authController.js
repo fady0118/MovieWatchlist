@@ -18,6 +18,7 @@ const registerController = async (req, res) => {
         email,
         username,
         password: hashedPassword,
+        role: "USER",
       },
     });
     const token = jwt.sign({ user_Id: user.id }, process.env.JWT_SECRET, { expiresIn: "24h" });
@@ -67,4 +68,36 @@ const logoutController = async (req, res) => {
   res.status(200).json({ status: "success", message: "Logged out successfully" });
 };
 
-export { registerController, loginController, logoutController };
+// when a user is deleted we change the createdBy value to user 0 (deleted user)
+// only the user himself can delete his account
+const removeUser = async (req, res) => {
+  try {
+    // userId from the middleware is the user making the req to delete his account
+    const userId = req.user.id;
+    // we need to protect (deleted user) from any deletion attempts
+    if (userId === process.env.DELETED_USER_ID) {
+      throw new Error("System user cannot be deleted");
+    }
+    // before we delete we should transaction movies created by him to (deletedUser)
+    await prisma.$transaction([
+      prisma.movie.updateMany({
+        where: {
+          createdBy: userId,
+        },
+        data: {
+          createdBy: process.env.DELETED_USER_ID,
+        },
+      }),
+    ]);
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    res.status(200).json({ message: `${deletedUser.username} successfully removed!` });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
+export { registerController, loginController, logoutController, removeUser };

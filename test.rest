@@ -1,15 +1,12 @@
-### Movie Routes
-### GET all movies
-GET http://localhost:3874/
-
+### AUTH ENDPOINT
 ### Register a User
 POST  http://localhost:3874/auth/register
 Content-Type: application/json
 
 {
-    "email":"testUser@gmail.com",
-    "username":"testUser_0",
-    "password":"testurpingThePEACE"
+    "email":"",
+    "username":"",
+    "password":""
 }
 
 ### Login a User
@@ -17,39 +14,72 @@ POST  http://localhost:3874/auth/login
 Content-Type: application/json
 
 {
-    "email":"deleted@system.local",
-    "password":"cogito281y0jnfl-ndn"
+    "email":"",
+    "password":""
 }
 ### Logout a User
 POST  http://localhost:3874/auth/logout
 
-### CRUD
-### WatchList
-### get user watchlist
-GET  http://localhost:3874/watchLists/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+### Remove a User (same user auth)
+DELETE   http://localhost:3874/auth/remove
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNjI5MTZhZjgtMWUxZi00OTYzLWJjNDgtYzhmMzA4MDZmNmQ2IiwiaWF0IjoxNzY3MzY1NTk3LCJleHAiOjE3Njc0NTE5OTd9.qVM5Agr_yNhByJCOvCUpUzbVhDUDugcIpEIBZ5UNnus
 
-### Add movie to watchlist
+### CRUD
+
+### WATCHLIST ENDPOINT
+### get user watchlist (same user auth)
+GET  http://localhost:3874/watchLists/
+Authorization: Bearer 
+### get user watchlist Item (same user auth)
+GET  http://localhost:3874/watchLists/id
+Authorization: Bearer 
+
+### Add movie to watchlist (same user auth)
 POST  http://localhost:3874/watchLists/
 Content-Type: application/json
-Authorization: Bearer eyJ5d8f2tgysbnsa9hnR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
-
+Authorization: Bearer 
 {
     "movieId":"16afaa70-82e0-4c07-ac3c-ad646854378e",
     "rating": 8
 }
 
-### update watchlist Item
-PATCH http://localhost:3874/watchLists/d2f7b94c-1573-4d1e-a2ba-1bca97566c6b
+### update watchlist Item (same user auth)
+PATCH http://localhost:3874/watchLists/id
 Content-Type:application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+Authorization: Bearer 
 
 {
     "rating":90,
     "status":"blablabla",
     "notes":23.2
 }
-### delete watchlist Item
-DELETE http://localhost:3874/watchLists/f56ea8d4-92a5-45c8-a2b9-0de5fa96e95d
+### delete watchlist Item (same user auth)
+DELETE http://localhost:3874/watchLists/id
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNzQ5MjM2NzYtYzM4ZS00MzVkLWFhYjEtMGE0MWIzNmZlZDExIiwiaWF0IjoxNzY3Mjg4NjI1LCJleHAiOjE3NjczNzUwMjV9.nIMnDvIt6lI67E92el99eLHzFE6KO2FpMwOElHGIMyM
+Authorization: Bearer 
+
+### MOVIES ENDPOINT
+### get all movies (same user auth)
+GET http://localhost:3874/movies/
+Authorization: Bearer 
+### get a movie by id (same user auth)
+GET http://localhost:3874/movies/id
+Authorization: Bearer 
+### add a movie (admin auth)
+POST http://localhost:3874/movies/
+Authorization: Bearer 
+### update a movie by id (admin auth)
+PATCH  http://localhost:3874/movies/id
+Authorization: Bearer 
+### delete a movie by id (admin auth)
+DELETE   http://localhost:3874/movies/id
+Authorization: Bearer 
+
+### ADMIN ENDPOINT
+### Promote a user to admin (admin auth required) 
+PATCH http://localhost:3874/admin/users/promote/id
+Authorization: Bearer
+
+{
+    "role": "ADMIN"
+}

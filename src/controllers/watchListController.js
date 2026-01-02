@@ -5,7 +5,7 @@ const getWatchListController = async (req, res) => {
     // we should fetch from watchListItem table all items linked to the user
     // we know the user making the request via his token
     // the middleware verified the token and extracted the userId
-    const userId = req.userId;
+    const userId = req.user.id;
     const userWatchList = await prisma.watchlistItem.findMany({
       where: {
         userId: userId,
@@ -17,12 +17,33 @@ const getWatchListController = async (req, res) => {
   }
 };
 
+const getWatchlistItemController = async (req, res) => {
+  try {
+    const watchListItemId = req.params.id;
+    // we must confirm that the userId in the watchlist item matches the req user's id
+    const watchListItem = await prisma.watchlistItem.findUnique({
+      where: {
+        id: watchListItemId,
+      },
+    });
+    if (!watchListItem) {
+      return res.status(404).json({ message: "watchlist item not found!" });
+    }
+    if (watchListItem.userId !== req.user.id) {
+      return res.status(401).json({ message: "forbidden to view this watchlist Item" });
+    }
+    res.status(200).json(watchListItem);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
 const addToWatchListController = async (req, res) => {
   // we will create a watchlistItem using the reqbody
   // and attach it the userId of the user making the req
   try {
     const { movieId, status, rating, notes } = req.body;
-    const userId = req.userId;
+    const userId = req.user.id;
     // verify movie exists in the movie table
     const movieExists = await prisma.movie.findUnique({
       where: {
@@ -68,14 +89,14 @@ const updateWatchListItemController = async (req, res) => {
       return res.status(404).json({ message: "Watchlist item not found!" });
     }
     // check that userId of the item matches the req user's id
-    if (watchListItem.userId !== req.userId) {
+    if (watchListItem.userId !== req.user.id) {
       return res.status(403).json({ message: "forbidden to update this watchlist Item" });
     }
     // update the item
     const updatedWatchlistItem = await prisma.watchlistItem.update({
       where: {
         id: watchListItemId,
-        userId: req.userId,
+        userId: req.user.id,
       },
       data: {
         status,
@@ -102,14 +123,14 @@ const deleteWatchListItemController = async (req, res) => {
       return res.status(404).json({ message: "Watchlist item not found!" });
     }
     // check that userId of the item matches the req user's id
-    if (watchListItem.userId !== req.userId) {
+    if (watchListItem.userId !== req.user.id) {
       return res.status(403).json({ message: "forbidden to delete this watchlist Item" });
     }
     // delete requested item
     const deletedItem = await prisma.watchlistItem.delete({
       where: {
         id: watchListItemId,
-        userId: req.userId,
+        userId: req.user.id,
       },
     });
     res.status(200).json({ message: "Watchlist item deleted!", deletedItem });
@@ -118,4 +139,4 @@ const deleteWatchListItemController = async (req, res) => {
   }
 };
 
-export { getWatchListController, addToWatchListController, updateWatchListItemController, deleteWatchListItemController };
+export { getWatchListController, getWatchlistItemController, addToWatchListController, updateWatchListItemController, deleteWatchListItemController };

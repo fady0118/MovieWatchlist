@@ -5,7 +5,7 @@ const app = express();
 
 // body parsing middleware
 app.use(express.json()); // parse json req body
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));  // parse URL-encoded data
 // import middleware
 import authMiddleware from "./middleware/authmiddleware.js";
 // import routes
@@ -21,7 +21,9 @@ app.use("/auth", authRouter);
 app.use("/movies", authMiddleware, movieRouter);
 app.use("/users", authMiddleware, userRouter);
 app.use("/watchLists", authMiddleware, watchListRouter);
-
+//ADMIN
+import adminRouter from './Routes/adminRouter.js'
+app.use("/admin", authMiddleware, adminRouter);
 // app.use('/testPrisma', async(req, res)=>{
 // const result = await prisma.$queryRaw`SELECT 1`;
 // console.log(result);

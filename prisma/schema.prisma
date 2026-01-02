@@ -20,6 +20,7 @@ model User {
   email         String    @unique
   password      String
   createdAt     DateTime  @default(now())
+  role          Role      @default(USER)
 
   //relations
   movies          Movie[]   @relation("MovieCreator")
@@ -58,8 +59,12 @@ model WatchlistItem {
   @@unique([userId, movieId])
 }
 
+enum Role {
+  USER
+  ADMIN
+}
 
-enum WatchlistStatus{
+enum WatchlistStatus {
   PLANNED
   WATCHING
   COMPLETED

@@ -1,9 +1,17 @@
 import { Router } from "express";
-import { prisma } from "../../prismaClient.js";
+import { addMovie, deleteMovie, getAllMovies, getMovie, updateMovie } from "../../controllers/movieController.js";
 
 const router = Router();
 
-// when a user is deleted we change the createdBy value to user 0 (deleted user)
-const DELETED_USER_ID = "100cb528-a882-48c9-a8ff-f84c09cb1703"; // will be used in the delete movie api
+// get all movies
+router.get("/", getAllMovies);
+// add a movie
+router.post("/", addMovie);
+// get a movie by id
+router.get("/:id", getMovie);
+// update a movie by its id
+router.patch("/:id", updateMovie);
+// delete a movie by its id
+router.delete("/:id", deleteMovie);
 
 export default router;
