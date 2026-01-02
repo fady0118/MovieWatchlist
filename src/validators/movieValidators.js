@@ -11,6 +11,7 @@ const addMovieSchema = z.object({
   genres: z.array(z.string(), { message: "All genres must be strings" }).optional(),
   runtime: z.coerce.number().int("Runtime must be an integer").positive("Runtime must be a positive number (in minutes)").optional(),
   posterUrl: z.string().url("Poster URL must be a valid URL").optional(),
+  createdBy: z.string()
 });
 
 const updateMovieSchema = z.object({
@@ -24,6 +25,7 @@ const updateMovieSchema = z.object({
   genres: z.array(z.string(), { message: "All genres must be strings" }).optional(),
   runtime: z.coerce.number().int("Runtime must be an integer").positive("Runtime must be a positive number (in minutes)").optional(),
   posterUrl: z.string().url("Poster URL must be a valid URL").optional(),
+  createdBy: z.string().optional()
 });
 
 export { addMovieSchema, updateMovieSchema };

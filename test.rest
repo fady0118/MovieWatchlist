@@ -4,22 +4,21 @@ POST  http://localhost:3874/auth/register
 Content-Type: application/json
 
 {
-    "email":"",
-    "username":"",
+    "username": "",
+    "email": "",
     "password":""
 }
-
 ### Login a User
 POST  http://localhost:3874/auth/login
 Content-Type: application/json
 
 {
-    "email":"",
+    "email": "",
     "password":""
+
 }
 ### Logout a User
 POST  http://localhost:3874/auth/logout
-
 
 ### CRUD
 ### USER ENDPOINT
@@ -27,10 +26,9 @@ POST  http://localhost:3874/auth/logout
 PATCH   http://localhost:3874/users/update
 Content-Type: application/json
 Authorization: Bearer 
-
 {
-    "email":"",
-    "username":"",
+    "username": "",
+    "email": "",
     "password":""
 }
 ### Remove a User (same user auth)
@@ -45,6 +43,7 @@ Authorization: Bearer
 ### get user watchlist (same user auth)
 GET  http://localhost:3874/watchLists/
 Authorization: Bearer 
+
 ### get user watchlist Item (same user auth)
 GET  http://localhost:3874/watchLists/id
 Authorization: Bearer 
@@ -53,9 +52,11 @@ Authorization: Bearer
 POST  http://localhost:3874/watchLists/
 Content-Type: application/json
 Authorization: Bearer 
+
 {
-    "movieId":"16afaa70-82e0-4c07-ac3c-ad646854378e",
-    "rating": 8
+    "movieId":"",
+    "rating": ,
+    "notes": ""
 }
 
 ### update watchlist Item (same user auth)
@@ -64,9 +65,7 @@ Content-Type:application/json
 Authorization: Bearer 
 
 {
-    "rating":90,
-    "status":"blablabla",
-    "notes":23.2
+
 }
 ### delete watchlist Item (same user auth)
 DELETE http://localhost:3874/watchLists/id
@@ -77,15 +76,24 @@ Authorization: Bearer
 ### get all movies (same user auth)
 GET http://localhost:3874/movies/
 Authorization: Bearer 
+
 ### get a movie by id (same user auth)
 GET http://localhost:3874/movies/id
 Authorization: Bearer 
+
 ### add a movie (admin auth)
 POST http://localhost:3874/movies/
 Content-Type: application/json
 Authorization: Bearer 
 
 {
+    "title": "",
+    "overview": "",
+    "releaseYear": ,
+    "genres": [],
+    "runtime": ,
+    "posterUrl": "",
+    "createdBy": ""
 
 }
 ### update a movie by id (admin auth)
@@ -104,7 +112,7 @@ Authorization: Bearer
 ### Promote a user to admin (admin auth required) 
 PATCH http://localhost:3874/admin/users/promote/id
 Content-Type: application/json
-Authorization: Bearer
+Authorization: Bearer 
 
 {
     "role": "ADMIN"

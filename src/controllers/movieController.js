@@ -36,18 +36,19 @@ const addMovie = async (req, res) => {
     if (req.user.role !== "ADMIN") {
       return res.status(403).json({ message: "forbidden to add a movie" });
     }
-    const { title, overview, genres, runtime, posterUrl, createdBy } = req.body;
+    const { title, overview, releaseYear, genres, runtime, posterUrl, createdBy } = req.body;
     const newMovie = await prisma.movie.create({
       data: {
         title,
         overview,
+        releaseYear,
         genres,
         runtime,
         posterUrl,
         createdBy,
       },
     });
-    res.status(200).json({ message: `${newMovie.title} successfully added!`, movie: newMovie });
+    res.status(200).json({ message: `[${newMovie.title}] successfully added!`, movie: newMovie });
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
@@ -60,7 +61,7 @@ const updateMovie = async (req, res) => {
       return res.status(403).json({ message: "forbidden to update that movie" });
     }
     const movieId = req.params.id;
-    const { title, overview, genres, runtime, posterUrl, createdBy } = req.body;
+    const { title, overview, releaseYear, genres, runtime, posterUrl, createdBy } = req.body;
     const movie = await prisma.movie.findUnique({
       where: {
         id: movieId,
@@ -71,11 +72,11 @@ const updateMovie = async (req, res) => {
     }
     const updatedMovie = await prisma.movie.update({
       where: {
-        id: movie,
+        id: movieId,
       },
-      data: { title, overview, genres, runtime, posterUrl, createdBy },
+      data: { title, overview, releaseYear, genres, runtime, posterUrl, createdBy },
     });
-    res.status(200).json({ message: `movie: "${updatedMovie.title}" has been updated!` });
+    res.status(200).json({ message: `movie: [${updatedMovie.title}] has been updated!` });
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
@@ -98,10 +99,10 @@ const deleteMovie = async (req, res) => {
     }
     const deletedMovie = await prisma.movie.delete({
       where: {
-        id: movie,
+        id: movieId,
       },
     });
-    res.status(200).json({ message: `movie: "${deletedMovie.title}" has been updated!` });
+    res.status(200).json({ message: `movie: [${deletedMovie.title}] has been updated!` });
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }

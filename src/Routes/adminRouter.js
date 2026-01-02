@@ -3,7 +3,7 @@ import { prisma } from "../prismaClient.js";
 
 const router = Router();
 // promote a user to admin
-router.post("/users/promote/:id", async (req, res) => {
+router.patch("/users/promote/:id", async (req, res) => {
   try {
     const promotedUserId = req.params.id;
     const promotingUser = req.user;
