@@ -35,8 +35,12 @@ Authorization: Bearer
 }
 ### Remove a User (same user auth)
 DELETE  http://localhost:3874/users/remove
+Content-Type: application/json
 Authorization: Bearer 
 
+{
+    "password":""
+}
 ### WATCHLIST ENDPOINT
 ### get user watchlist (same user auth)
 GET  http://localhost:3874/watchLists/

@@ -1,13 +1,15 @@
 // Authentication Routes
 import { Router } from "express";
 import { registerController, loginController, logoutController } from "../../controllers/authController.js";
-import authMiddleware from '../../middleware/authmiddleware.js'
+import { validateRequest } from "../../middleware/validateRequest.js";
+import { loginSchema, registerSchema } from "../../validators/authValidators.js";
+
 const router = Router();
 
 // Register User
-router.post("/register", registerController);
+router.post("/register", validateRequest(registerSchema), registerController);
 // Login User
-router.post("/login", loginController);
+router.post("/login", validateRequest(loginSchema), loginController);
 // Logout User
 router.post("/logout", logoutController);
 

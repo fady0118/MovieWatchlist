@@ -25,6 +25,12 @@ const updateUserController = async (req, res) => {
 // only the user himself can delete his account
 const removeUserController = async (req, res) => {
   try {
+    // the user must re-enter their password to delete his account
+    const {password} = req.body
+    const passwordMatch = await bcrypt.compare(password, req.user.password)
+    if(!passwordMatch){
+      return res.status(401).json({message:"Invalid credentials"})
+    }
     // userId from the middleware is the user making the req to delete his account
     const userId = req.user.id;
     // we need to protect (deleted user) from any deletion attempts
