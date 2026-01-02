@@ -20,11 +20,22 @@ Content-Type: application/json
 ### Logout a User
 POST  http://localhost:3874/auth/logout
 
-### Remove a User (same user auth)
-DELETE   http://localhost:3874/auth/remove
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX0lkIjoiNjI5MTZhZjgtMWUxZi00OTYzLWJjNDgtYzhmMzA4MDZmNmQ2IiwiaWF0IjoxNzY3MzY1NTk3LCJleHAiOjE3Njc0NTE5OTd9.qVM5Agr_yNhByJCOvCUpUzbVhDUDugcIpEIBZ5UNnus
 
 ### CRUD
+### USER ENDPOINT
+### Update user data (same user auth)
+PATCH   http://localhost:3874/users/update
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+    "email":"",
+    "username":"",
+    "password":""
+}
+### Remove a User (same user auth)
+DELETE  http://localhost:3874/users/remove
+Authorization: Bearer 
 
 ### WATCHLIST ENDPOINT
 ### get user watchlist (same user auth)
@@ -67,10 +78,20 @@ GET http://localhost:3874/movies/id
 Authorization: Bearer 
 ### add a movie (admin auth)
 POST http://localhost:3874/movies/
+Content-Type: application/json
 Authorization: Bearer 
+
+{
+
+}
 ### update a movie by id (admin auth)
 PATCH  http://localhost:3874/movies/id
+Content-Type: application/json
 Authorization: Bearer 
+
+{
+
+}
 ### delete a movie by id (admin auth)
 DELETE   http://localhost:3874/movies/id
 Authorization: Bearer 
@@ -78,6 +99,7 @@ Authorization: Bearer
 ### ADMIN ENDPOINT
 ### Promote a user to admin (admin auth required) 
 PATCH http://localhost:3874/admin/users/promote/id
+Content-Type: application/json
 Authorization: Bearer
 
 {
