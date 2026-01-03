@@ -75,11 +75,9 @@ Authorization: Bearer
 ### MOVIES ENDPOINT
 ### get all movies (same user auth)
 GET http://localhost:3874/movies/
-Authorization: Bearer 
 
 ### get a movie by id (same user auth)
-GET http://localhost:3874/movies/id
-Authorization: Bearer 
+GET http://localhost:3874/movies/
 
 ### add a movie (admin auth)
 POST http://localhost:3874/movies/
