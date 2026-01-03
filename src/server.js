@@ -1,11 +1,13 @@
 import express from "express";
-import { prisma, connectDB, disconnectDB } from "./prismaClient.js";
+import { connectDB, disconnectDB } from "./prismaClient.js";
+
 const PORT = process.env.PORT || 8000;
+connectDB();
 const app = express();
 
 // body parsing middleware
 app.use(express.json()); // parse json req body
-app.use(express.urlencoded({ extended: true }));  // parse URL-encoded data
+app.use(express.urlencoded({ extended: true })); // parse URL-encoded data
 // import middleware
 import authMiddleware from "./middleware/authmiddleware.js";
 // import routes
@@ -18,11 +20,11 @@ import authRouter from "./Routes/authRoutes/authRoutes.js";
 //Auth
 app.use("/auth", authRouter);
 //CRUD
-app.use("/movies", authMiddleware, movieRouter);
+app.use("/movies", movieRouter);
 app.use("/users", authMiddleware, userRouter);
 app.use("/watchLists", authMiddleware, watchListRouter);
 //ADMIN
-import adminRouter from './Routes/adminRouter.js'
+import adminRouter from "./Routes/adminRouter.js";
 app.use("/admin", authMiddleware, adminRouter);
 // app.use('/testPrisma', async(req, res)=>{
 // const result = await prisma.$queryRaw`SELECT 1`;
